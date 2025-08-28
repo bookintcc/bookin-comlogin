@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Book In - Aluno</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+         .status.unavailable {
+            color: #c94c4c; 
+            font-weight: bold;
+        }
+
+        .notify-btn {
+            background-color: #6c757d;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .notify-btn:hover {
+            background-color: #5a6268;
+        }
+        
+        .unavailable-section {
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><img src="Book In.png" alt="Logo" id="logo"></div>
+        <div class="nav-container">
+            <nav>
+                <ul>
+                    <li><a href="#home" class="nav-link">Início</a></li>
+                    <li><a href="#catalogo" class="nav-link">Catálogo</a></li>
+                    <li><a href="#disponiveis" class="nav-link">Disponíveis</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="search-profile">
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Digite o título, autor ou gênero..."> 
+                <button id="search-button">Pesquisar</button>
+                
+                <div id="results"></div>
+            </div>
+            
+            <div class="profile-area">
+    <a href="#" class="perfil-icon" id="abrir-menu-perfil" style="display: none;">
+        <img src="usuario.png" alt="Perfil">
+    </a>
+    <div id="menu-perfil" class="menu-perfil" style="display: none;">
+        <span id="nome-usuario">Olá, nome</span>
+        <div class="rm-logado">RM: <span id="rm-logado-display"></span></div>
+        <hr>
+        <a href="reserva.html">Meus empréstimos</a>
+        <a href="#" id="btn-logout">Sair</a>
+    </div>
+    <a href="#" id="abrir-login-popup" class="btn-entrar">
+        Login
+    </a>
+</div>
+        </div>
+    </header>
+
+    <main id="home">
+        <section class="left">
+            <div class="welcome-container">
+                <h1>Bem-vindo(a) ao <img src="Book In.png" alt="Logo" id="logo2"></h1>
+                <p class="subtitle"><em>Sua jornada virtual pela biblioteca!</em></p>
+            </div>
+            <div id="cat">
+                <h2>“O que devo ler agora?”</h2>
+                <p class="description"><em>Quer ler, mas não sabe onde encontrar um livro?</em></p>
+                <button onclick="scrollToSection('catalogo')">Ver catálogo de livros</button>
+            </div>
+        </section>
+        <section class="right">
+            <div class="right-content">
+                <h2>Disponíveis na Biblioteca</h2>
+                <p>Todos os livros disponíveis na biblioteca no momento.</p>
+                <div class="book-container">
+                    <img src="livro1.jpg" alt="Livro 1" class="book book1">
+                    <img src="livro2.jpg" alt="Livro 2" class="book book2">
+                    <img src="livro3.jpg" alt="Livro 3" class="book book3">
+                </div>
+                <button id="dsp" onclick="scrollToSection('disponiveis')">Ver agora</button>
+            </div>
+        </section>
+    </main>
+
+    <section id="catalogo" class="section">
+        <div class="section-content">
+            <h2>Catálogo de Livros</h2>
+            <p>Explore nossa coleção completa de livros</p>
+            <div class="genre-tabs">
+                <button class="genre-tab active" data-filter="all">Todos</button>
+                <button class="genre-tab" data-filter="fantasia">Fantasia</button>
+                <button class="genre-tab" data-filter="misterio">Mistério</button>
+                <button class="genre-tab" data-filter="romance">Romance</button>
+                <button class="genre-tab" data-filter="ficcao-cientifica">Ficção Científica</button>
+                <button class="genre-tab" data-filter="ficcao">Ficção</button>
+                <button class="genre-tab" data-filter="nao-ficcao">Não Ficção</button>
+                <button class="genre-tab" data-filter="aventura">Aventura</button>
+                <button class="genre-tab" data-filter="terror">Terror</button>
+                <button class="genre-tab" data-filter="realismo-magico">Realismo Mágico</button>
+            </div>
+            
+           <div class="books-grid">
+                <div class="catalog-book" data-genre="fantasia">
+                    <img src="livroo.jpg" alt="Livro 1">
+                    <h3>Coraline</h3>
+                    <p class="author">Autor: Neil Gaiman</p>
+                    <p class="genre">Gênero: Fantasia</p>
+                    <button class="details-btn" onclick="openBookDetailsPage('Coraline', 'Neil Gaiman', '2002', 'Uma jovem descobre uma porta secreta para um mundo alternativo que é uma versão sombria e sinistra de sua própria vida.', 'Disponível', 'livroo.jpg')">Ver detalhes</button>
+                </div>
+                <div class="catalog-book" data-genre="misterio">
+                    <img src="livro2.jpg" alt="Livro 2">
+                    <h3>Sherlock Holmes: Um Estudo em Vermelho</h3>
+                    <p class="author">Autor: Arthur Conan Doyle</p>
+                    <p class="genre">Gênero: Mistério</p>
+                    <button class="details-btn" onclick="openBookDetailsPage('Sherlock Holmes: Um Estudo em Vermelho', 'Arthur Conan Doyle', '1887', 'O primeiro romance de Sherlock Holmes, onde o detetive e Dr. Watson investigam um misterioso assassinato em Londres.', 'Disponível', 'livro2.jpg')">Ver detalhes</button>
+                </div>
+                <div class="catalog-book" data-genre="romance">
+                    <img src="livro3.jpg" alt="Livro 3">
+                    <h3>Os Miseráveis</h3>
+                    <p class="author">Autor: Victor Hugo</p>
+                    <p class="genre">Gênero: Romance</p>
+                    <button class="details-btn" onclick="openBookDetailsPage('Os Miseráveis', 'Victor Hugo', '1862', 'A história de Jean Valjean, um ex-condenado que busca redenção em meio à injustiça social na França do século XIX.', 'Disponível', 'livro3.jpg')">Ver detalhes</button>
+                </div>
+                <div class="catalog-book" data-genre="fantasia">
+                    <img src="livro4.jpg" alt="Livro 4">
+                    <h3>As Crônicas de Nárnia</h3>
+                    <p class="author">Autor: C. S. Lewis</p>
+                    <p class="genre">Gênero: Fantasia</p>
+                    <button class="details-btn" onclick="openBookDetailsPage('As Crônicas de Nárnia', 'C. S. Lewis', '1950', 'Crianças descobrem um mundo mágico chamado Nárnia, liderado pelo leão Aslan, e se envolvem em uma batalha épica entre o bem e o mal.', 'Disponível', 'livro4.jpg')">Ver detalhes</button>
+                </div>
+                <div class="catalog-book" data-genre="ficcao-cientifica">
+                    <img src="livros/duna.jpg" alt="Livro 5">
+                    <h3>Duna</h3>
+                    <p class="author">Autor: Frank Herbert</p>
+                    <p class="genre">Gênero: Ficção Científica</p>
+                    <button class="details-btn" onclick="openBookDetailsPage('Duna', 'Frank Herbert', '1965', 'Em um planeta desértico, Paul Atreides lidera uma rebelião para controlar a substância mais valiosa do universo.', 'Disponível', 'livros/duna.jpg')">Ver detalhes</button>
+                </div>
+                <div class="catalog-book" data-genre="fantasia">
+                    <img src="livros/hobbit.jpg" alt="Livro 6">
+                    <h3>O Hobbit</h3>
+                    <p class="author">Autor: J.R.R. Tolkien</p>
+                    <p class="genre">Gênero: Fantasia</p>
+                    <button class="details-btn" onclick="openBookDetailsPage('O Hobbit', 'J.R.R. Tolkien', '1937', 'A aventura de Bilbo Bolseiro, que é levado a uma jornada para recuperar um tesouro guardado por um dragão.', 'Indisponível', 'livros/hobbit.jpg')">Ver detalhes</button>
+                </div>
+                <div class="catalog-book" data-genre="ficcao">
+                    <img src="livros/1984.jpg" alt="Livro 7">
+                    <h3>1984</h3>
+                    <p class="author">Autor: George Orwell</p>
+                    <p class="genre">Gênero: Ficção</p>
+                    <button class="details-btn" onclick="openBookDetailsPage('1984', 'George Orwell', '1949', 'Em uma sociedade totalitária, Winston Smith luta contra a vigilância constante do Grande Irmão e a manipulação da verdade.', 'Disponível', 'livros/1984.jpg')">Ver detalhes</button>
+                </div>
+                <div class="catalog-book" data-genre="ficcao">
+                    <img src="https://images.dlivros.org/George-Orwell/revolucao-bichos-george-orwell_large.webp" alt="Livro 8">
+                    <h3>A Revolução dos Bichos</h3>
+                    <p class="author">Autor: George Orwell</p>
+                    <p class="genre">Gênero: Ficção</p>
+                    <button class="details-btn" onclick="openBookDetailsPage('A Revolução dos Bichos', 'George Orwell', '1945', 'Uma sátira sobre a Revolução Russa, onde os animais de uma fazenda tomam o poder, mas acabam criando uma tirania ainda pior.', 'Indisponível', 'https://images.dlivros.org/George-Orwell/revolucao-bichos-george-orwell_large.webp')">Ver detalhes</button>
+                </div>
+                <div class="catalog-book" data-genre="fantasia">
+                    <img src="https://br.web.img3.acsta.net/medias/nmedia/18/92/91/32/20224832.jpg" alt="Livro 9">
+                    <h3>O Senhor dos Anéis: A Sociedade do Anel</h3>
+                    <p class="author">Autor: J.R.R. Tolkien</p>
+                    <p class="genre">Gênero: Fantasia</p>
+                    <button class="details-btn" onclick="openBookDetailsPage('O Senhor dos Anéis: A Sociedade do Anel', 'J.R.R. Tolkien', '1954', 'Frodo Bolseiro inicia sua jornada perigosa para destruir o Um Anel e salvar a Terra-média da escuridão.', 'Disponível', 'https://br.web.img3.acsta.net/medias/nmedia/18/92/91/32/20224832.jpg')">Ver detalhes</button>
+                </div>
+                <div class="catalog-book" data-genre="ficcao-cientifica">
+                    <img src="https://m.media-amazon.com/images/I/81MandRgHRL._UF1000,1000_QL80_.jpg" alt="Livro 10">
+                    <h3>O Guia do Mochileiro das Galáxias</h3>
+                    <p class="author">Autor: Douglas Adams</p>
+                    <p class="genre">Gênero: Ficção Científica</p>
+                    <button class="details-btn" onclick="openBookDetailsPage('O Guia do Mochileiro das Galáxias', 'Douglas Adams', '1979', 'A Terra é demolida para dar lugar a uma via expressa espacial, e Arthur Dent é salvo por seu amigo Ford Prefect, um alienígena disfarçado.', 'Disponível', 'https://m.media-amazon.com/images/I/81MandRgHRL._UF1000,1000_QL80_.jpg')">Ver detalhes</button>
+                </div>
+                <div class="catalog-book" data-genre="fantasia">
+                    <img src="https://m.media-amazon.com/images/I/81CGmkRG9GL.jpg" alt="Livro 11">
+                    <h3>O Nome do Vento</h3>
+                    <p class="author">Autor: Patrick Rothfuss</p>
+                    <p class="genre">Gênero: Fantasia</p>
+                    <button class="details-btn" onclick="openBookDetailsPage('O Nome do Vento', 'Patrick Rothfuss', '2007', 'A história de Kvothe, um jovem com um talento mágico extraordinário que se torna o mais notório mago que o mundo já viu.', 'Indisponível', 'https://m.media-amazon.com/images/I/81CGmkRG9GL.jpg')">Ver detalhes</button>
+                </div>
+                <div class="catalog-book" data-genre="romance">
+                    <img src="https://www.lpm.com.br/livros/imagens/dom_quixote_hq_9788525425669_hd.jpg" alt="Livro 12">
+                    <h3>Dom Quixote</h3>
+                    <p class="author">Autor: Miguel de Cervantes</p>
+                    <p class="genre">Gênero: Romance</p>
+                    <button class="details-btn" onclick="openBookDetailsPage('Dom Quixote', 'Miguel de Cervantes', '1605', 'Um fidalgo que leu tantos romances de cavalaria que enlouqueceu e decidiu se tornar um cavaleiro andante.', 'Disponível', 'https://www.lpm.com.br/livros/imagens/dom_quixote_hq_9788525425669_hd.jpg')">Ver detalhes</button>
+                </div>
+                <div class="catalog-book" data-genre="realismo-magico">
+                    <img src="https://m.media-amazon.com/images/I/817esPahlrL.jpg" alt="Livro 13">
+                    <h3>Cem Anos de Solidão</h3>
+                    <p class="author">Autor: Gabriel García Márquez</p>
+                    <p class="genre">Gênero: Realismo Mágico</p>
+                    <button class="details-btn" onclick="openBookDetailsPage('Cem Anos de Solidão', 'Gabriel García Márquez', '1967', 'A saga da família Buendía na cidade fictícia de Macondo, onde elementos fantásticos se misturam com a realidade.', 'Indisponível', 'https://m.media-amazon.com/images/I/817esPahlrL.jpg')">Ver detalhes</button>
+                </div>
+                <div class="catalog-book" data-genre="romance">
+                    <img src="https://m.media-amazon.com/images/I/71Xta4Nf7uL._UF1000,1000_QL80_.jpg" alt="Livro 14">
+                    <h3>Orgulho e Preconceito</h3>
+                    <p class="author">Autor: Jane Austen</p>
+                    <p class="genre">Gênero: Romance</p>
+                    <button class="details-btn" onclick="openBookDetailsPage('Orgulho e Preconceito', 'Jane Austen', '1813', 'A história de Elizabeth Bennet e sua conturbada relação com o Sr. Darcy em uma sociedade onde o status e o casamento são tudo.', 'Disponível', 'https://m.media-amazon.com/images/I/71Xta4Nf7uL._UF1000,1000_QL80_.jpg')">Ver detalhes</button>
+                </div>
+                <div class="catalog-book" data-genre="ficcao">
+                    <img src="https://m.media-amazon.com/images/I/91WKPd60P4L.jpg" alt="Livro 15">
+                    <h3>O Sol é para Todos</h3>
+                    <p class="author">Autor: Harper Lee</p>
+                    <p class="genre">Gênero: Ficção</p>
+                    <button class="details-btn" onclick="openBookDetailsPage('O Sol é para Todos', 'Harper Lee', '1960', 'Uma história sobre racismo e injustiça no sul dos Estados Unidos, vista pelos olhos de uma criança.', 'Disponível', 'https://m.media-amazon.com/images/I/91WKPd60P4L.jpg')">Ver detalhes</button>
+                </div>
+                <div class="catalog-book" data-genre="nao-ficcao">
+                    <img src="https://m.media-amazon.com/images/I/81BTkpMrLYL.jpg" alt="Livro 16">
+                    <h3>Sapiens: Uma Breve História da Humanidade</h3>
+                    <p class="author">Autor: Yuval Noah Harari</p>
+                    <p class="genre">Gênero: Não Ficção</p>
+                    <button class="details-btn" onclick="openBookDetailsPage('Sapiens: Uma Breve História da Humanidade', 'Yuval Noah Harari', '2011', 'Uma análise da história da humanidade, desde a Idade da Pedra até a era moderna, explorando como o Homo sapiens chegou a dominar o planeta.', 'Disponível', 'https://m.media-amazon.com/images/I/81BTkpMrLYL.jpg')">Ver detalhes</button>
+                </div>
+                <div class="catalog-book" data-genre="fantasia">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTqKZ3yThwD8LVzlCnxtmheV8AD6sDepyTWw&s" alt="Livro 17">
+                    <h3>O Pequeno Príncipe</h3>
+                    <p class="author">Autor: Antoine de Saint-Exupéry</p>
+                    <p class="genre">Gênero: Fantasia</p>
+                    <button class="details-btn" onclick="openBookDetailsPage('O Pequeno Príncipe', 'Antoine de Saint-Exupéry', '1943', 'Um piloto de avião cai no deserto e conhece um jovem príncipe que viajou de planeta em planeta em busca de sabedoria.', 'Indisponível', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTqKZ3yThwD8LVzlCnxtmheV8AD6sDepyTWw&s')">Ver detalhes</button>
+                </div>
+                <div class="catalog-book" data-genre="terror">
+                    <img src="https://cdl-static.s3-sa-east-1.amazonaws.com/blog/artigo/6739/images/frankenstein-edicao-bolso-de-luxo.jpg" alt="Livro 18">
+                    <h3>Frankenstein</h3>
+                    <p class="author">Autor: Mary Shelley</p>
+                    <p class="genre">Gênero: Terror</p>
+                    <button class="details-btn" onclick="openBookDetailsPage('Frankenstein', 'Mary Shelley', '1818', 'A história do jovem cientista Victor Frankenstein, que cria uma criatura grotesca e é forçado a enfrentar as consequências de sua ambição.', 'Disponível', 'https://cdl-static.s3-sa-east-1.amazonaws.com/blog/artigo/6739/images/frankenstein-edicao-bolso-de-luxo.jpg')">Ver detalhes</button>
+                </div>
+                <div class="catalog-book" data-genre="aventura">
+                    <img src="https://m.media-amazon.com/images/I/712mdW4zCcL._UF1000,1000_QL80_.jpg" alt="Livro 19">
+                    <h3>Moby Dick</h3>
+                    <p class="author">Autor: Herman Melville</p>
+                    <p class="genre">Gênero: Aventura</p>
+                    <button class="details-btn" onclick="openBookDetailsPage('Moby Dick', 'Herman Melville', '1851', 'A obsessiva jornada do Capitão Ahab para se vingar da gigantesca baleia branca que arrancou sua perna.', 'Disponível', 'https://m.media-amazon.com/images/I/712mdW4zCcL._UF1000,1000_QL80_.jpg')">Ver detalhes</button>
+                </div>
+                <div class="catalog-book" data-genre="romance">
+                    <img src="https://m.media-amazon.com/images/I/91RXDK2vhzL._UF1000,1000_QL80_.jpg" alt="Livro 20">
+                    <h3>A Culpa é das Estrelas</h3>
+                    <p class="author">Autor: John Green</p>
+                    <p class="genre">Gênero: Romance</p>
+                    <button class="details-btn" onclick="openBookDetailsPage('A Culpa é das Estrelas', 'John Green', '2012', 'Dois adolescentes com câncer se conhecem em um grupo de apoio e embarcam em uma jornada inesquecível sobre a vida, o amor e a perda.', 'Disponível', 'https://m.media-amazon.com/images/I/91RXDK2vhzL._UF1000,1000_QL80_.jpg')">Ver detalhes</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="disponiveis" class="section">
+        <div class="section-content">
+            <h2>Livros Disponíveis</h2>
+            <p>Confira os livros disponíveis para empréstimo:</p>
+            
+            <div class="available-books">
+                <!-- Livro 1 -->
+                <div class="available-book">
+                    <img src="livro1.jpg" alt="Livro 1">
+                    <div class="book-info">
+                        <h3>Coraline</h3>
+                        <p class="author">Autor: Neil Gaiman</p>
+                        <p class="status available">Disponível</p>
+                        <button class="borrow-btn" onclick="goToReservationPage(
+                            'Coraline',
+                            'Neil Gaiman',
+                            'livro1.jpg'
+                        )">Reservar</button>
+                    </div>
+                </div>
+                
+                <!-- Livro 2 -->
+                <div class="available-book">
+                    <img src="livro2.jpg" alt="Livro 2">
+                    <div class="book-info">
+                        <h3>Sherlock Holmes: Um mistério em vermelho</h3>
+                        <p class="author">Autor: Arthur Conan</p>
+                        <p class="status available">Disponível</p>
+                        <button class="borrow-btn" onclick="goToReservationPage(
+                            'Sherlock Holmes: Um mistério em vermelho',
+                            'Arthur Conan Doyle',
+                            'livro2.jpg'
+                        )">Reservar</button>
+                    </div>
+                </div>
+                
+                <!-- Livro 3 -->
+                <div class="available-book">
+                    <img src="livro3.jpg" alt="Livro 3">
+                    <div class="book-info">
+                        <h3>Os miseráveis</h3>
+                        <p class="author">Autor: Victor Hugo</p>
+                        <p class="status available">Disponível</p>
+                        <button class="borrow-btn" onclick="goToReservationPage(
+                            'Os miseráveis',
+                            'Victor Hugo',
+                            'livro3.jpg'
+                        )">Reservar</button>
+                    </div>
+                </div>
+                
+                <!-- Livro 4 -->
+                <div class="available-book">
+                    <img src="livro4.jpg" alt="Livro 4">
+                    <div class="book-info">
+                        <h3>As crônicas de Narnia</h3>
+                        <p class="author">Autor: C. S. Lewis</p>
+                        <p class="status available">Disponível</p>
+                        <button class="borrow-btn" onclick="goToReservationPage(
+                            'As crônicas de Narnia',
+                            'C. S. Lewis',
+                            'livro4.jpg'
+                        )">Reservar</button>
+                    </div>
+                </div>
+                <!-- Livro 5 -->
+                <div class="available-book">
+                    <img src="livro5.jpg" alt="Livro 5">
+                    <div class="book-info">
+                        <h3>Extraordinário</h3>
+                        <p class="author">Autor: R.J Palacio</p>
+                        <p class="status available">Disponível</p>
+                        <button class="borrow-btn" onclick="goToReservationPage(
+                            'Extraordinário',
+                            'R.J Palacio',
+                            'img/livro5.jpg'
+                        )">Reservar</button>
+                    </div>
+                </div>
+                <!-- Livro 6 -->
+                <div class="available-book">
+                    <img src="livro6.jpg" alt="Livro 6">
+                    <div class="book-info">
+                        <h3>A menina que roubava livros</h3>
+                        <p class="author">Autor: Markus Zusak</p>
+                        <p class="status available">Disponível</p>
+                        <button class="borrow-btn" onclick="goToReservationPage(
+                            'A menina que roubava livros',
+                            'Markus Zusak',
+                            'livro6.jpg'
+                        )">Reservar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<div id="modal-login" class="modal-container">
+    <div class="modal">
+        <button class="fechar">x</button>
+        <div class="header-modal">
+            <img src="/Log in.png" alt="img login" id="img-login">
+        </div>
+        <form id="form-login">
+            <label for="rm-login">RM Escolar:</label>
+            <input type="text" id="rm-login" placeholder="Digite seu RM Escolar" required>
+
+            <label for="senha-login">Senha:</label>
+            <div class="senha-input">
+                <input type="password" id="senha-login" placeholder="Digite sua senha" required>
+                <span class="eye-icon" onclick="togglePassword('senha-login')">👁️</span>
+            </div>
+
+            <a href="#" id="esqueci-senha">esqueci minha senha</a>
+
+            <button type="submit" class="btn-login">ENTRAR</button>
+        </form>
+        <p>Não possui uma conta? <a href="#" id="abrir-cadastro">Clique aqui</a></p>
+    </div>
+</div>
+
+<div id="modal-cadastro" class="modal-container">
+    <div class="modal">
+        <button class="fechar">x</button>
+        <div class="header-modal">
+            <img src="/cadastro.png" alt="img cadastro" id="img-cadastro">
+        </div>
+        <form id="form-cadastro">
+            <label for="nome-cadastro">Nome Completo:</label>
+            <input type="text" id="nome-cadastro" placeholder="Digite seu nome completo" required>
+
+            <label for="rm-cadastro">RM Escolar:</label>
+            <input type="text" id="rm-cadastro" placeholder="Digite seu RM escolar" required>
+
+            <label for="senha-cadastro">Senha:</label>
+            <div class="senha-input">
+                <input type="password" id="senha-cadastro" placeholder="Crie uma senha" required>
+                <span class="eye-icon" onclick="togglePassword('senha-cadastro')">👁️</span>
+            </div>
+
+            <label for="confirmar-senha">Confirmar Senha:</label>
+            <div class="senha-input">
+                <input type="password" id="confirmar-senha" placeholder="Confirme sua senha" required>
+                <span class="eye-icon" onclick="togglePassword('confirmar-senha')">👁️</span>
+            </div>
+
+            <button type="submit" class="btn-cadastro">CADASTRAR</button>
+        </form>
+        <p>Possui uma conta? <a href="#" id="abrir-login">Entrar</a></p>
+    </div>
+</div>
+
+    <script src="script.js">
+        const searchInput = document.getElementById('search-input');
+const searchButton = document.getElementById('search-button');
+const resultsDiv = document.getElementById('results');
+    function scrollToSection(id) {
+        const element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            console.warn(`Elemento com ID '${id}' não encontrado para rolagem.`);
+        }
+    }
+
+    function filterBooks(genre) {
+        const genreTabs = document.querySelectorAll('.genre-tab');
+        genreTabs.forEach(tab => {
+            if (tab.textContent.toLowerCase() === genre || (genre === 'all' && tab.textContent.toLowerCase() === 'todos')) {
+                tab.classList.add('active');
+            } else {
+                tab.classList.remove('active');
+            }
+        });
+
+        const books = document.querySelectorAll('.catalog-book');
+        books.forEach(book => {
+            if (genre === 'all' || book.dataset.genre === genre) {
+                book.style.display = 'block';
+            } else {
+                book.style.display = 'none';
+            }
+        });
+    }
+
+    function openBookDetailsPage(title, author, year, description, availability, cover) {
+        const params = new URLSearchParams();
+        params.append('title', title);
+        params.append('author', author);
+        params.append('year', year);
+        params.append('description', description);
+        params.append('availability', availability);
+        params.append('cover', cover); 
+
+        window.location.href = `detalhes.html?${params.toString()}`;
+    }
+
+    function goToReservationPage(title, author, cover) {
+        const params = new URLSearchParams();
+        params.append('title', title);
+        params.append('author', author);
+        params.append('cover', cover);
+        window.location.href = `reserva.html?${params.toString()}`;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const genreTabs = document.querySelectorAll('.genre-tab');
+        genreTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const filter = tab.dataset.filter;
+                filterBooks(filter);
+            });
+        });
+    });
+
+    (function(d){
+    var s = d.createElement("script");
+    s.setAttribute("data-account", "INSIRA_SEU_CÓDIGO_USERWAY_AQUI"); //exemplo para aplicações maiores
+    s.setAttribute("src", "https://cdn.userway.org/widget.js");
+    (d.body || d.head).appendChild(s);
+    })(document);
+
+       // Base de dados de livros
+const books = [
+    { title: "O pequeno príncipe", author: "Antoine de Saint-Exupéry", available: true },
+    { title: "Extraordinário", author: "R.J Palacio", available: true },
+    { title: "Biblioteca da meia-noite", author: "Matt Haig", available: false },
+    { title: "A menina que roubava livros", author: "Markus Zusak", available: true },
+    { title: "Bilneiro sobre os traseiros", author: "INVERNO DE 1999", available: false },
+    { title: "Coraline", author: "Neil Gaiman", available: true },
+    { title: "As crônicas de Narnia", author: "C. S. Lewis", available: true },
+    { title: "Os miseráveis", author: "Victor Hugo", available: true },
+    { title: "Sherlock Holmes: Um mistério em vermelho", author: "Arthur Conan", available: true },
+
+];
+
+// Funções gerais
+function scrollToSection(id) {
+    const element = document.getElementById(id);
+    if (element) {
+        element.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+}
+
+// Navegação
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        scrollToSection(targetId);
+    });
+});
+
+// Filtro de gênero
+document.querySelectorAll('.genre-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+        const filter = this.getAttribute('data-filter');
+        
+        // Ativa/desativa tabs
+        document.querySelectorAll('.genre-tab').forEach(t => {
+            t.classList.remove('active');
+        });
+        this.classList.add('active');
+        
+        // Filtra os livros
+        document.querySelectorAll('.catalog-book').forEach(book => {
+            book.style.display = (filter === 'all' || book.getAttribute('data-genre') === filter) 
+                ? 'flex' 
+                : 'none';
+        });
+    });
+});
+
+function searchBooks() {
+    const searchTerm = searchInput.value.toLowerCase();
+    resultsDiv.innerHTML = '';
+    
+    if (!searchTerm.trim()) {
+        resultsDiv.innerHTML = '<p>Por favor, digite algo para pesquisar.</p>';
+        resultsDiv.style.display = 'block';
+        return;
+    }
+    
+    const filteredBooks = books.filter(book => 
+        book.title.toLowerCase().includes(searchTerm) || 
+        book.author.toLowerCase().includes(searchTerm)
+    );
+    
+    if (filteredBooks.length === 0) {
+        resultsDiv.innerHTML = '<p>Nenhum livro encontrado. Tente outro termo.</p>';
+        resultsDiv.style.display = 'block';
+        return;
+    }
+    
+    filteredBooks.forEach(book => {
+        const bookElement = document.createElement('div');
+        bookElement.className = 'book-result';
+        bookElement.innerHTML = `
+            <div class="book-result-title">${book.title}</div>
+            <div class="book-result-author">${book.author}</div>
+            <div class="${book.available ? 'available' : 'unavailable'}">
+                ${book.available ? 'Disponível' : 'Indisponível'}
+            </div>
+        `;
+        resultsDiv.appendChild(bookElement);
+    });
+    
+    resultsDiv.style.display = 'block';
+}
+
+
+// Fecha resultados ao clicar fora
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.search-container')) {
+        resultsDiv.style.display = 'none';
+    }
+});
+
+// Inicializa filtro ativo
+document.querySelector('.genre-tab.active')?.click();
+
+// Event listeners
+searchButton.addEventListener('click', searchBooks);
+searchInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        searchBooks();
+    }
+});
+
+    </script>
+</body>
+</html>
